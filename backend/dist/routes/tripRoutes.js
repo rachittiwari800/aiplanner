@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const tripController_js_1 = require("../controllers/tripController.js");
+const authMiddleware_js_1 = require("../middleware/authMiddleware.js");
+const router = (0, express_1.Router)();
+router.post('/generate', authMiddleware_js_1.authenticateUser, tripController_js_1.generateTrip);
+router.post('/', authMiddleware_js_1.authenticateUser, tripController_js_1.saveTrip);
+router.post('/email', authMiddleware_js_1.authenticateUser, tripController_js_1.emailTripDraft);
+router.get('/', authMiddleware_js_1.authenticateUser, tripController_js_1.getUserTrips);
+router.get('/:id', authMiddleware_js_1.authenticateUser, tripController_js_1.getTripById);
+router.patch('/:id', authMiddleware_js_1.authenticateUser, tripController_js_1.updateTrip);
+router.delete('/:id', authMiddleware_js_1.authenticateUser, tripController_js_1.deleteTrip);
+router.post('/:id/email', authMiddleware_js_1.authenticateUser, tripController_js_1.emailTrip);
+exports.default = router;

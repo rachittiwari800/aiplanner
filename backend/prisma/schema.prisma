@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  email        String   @unique
+  passwordHash String?
+  googleId     String?
+  avatarUrl    String?
+  isPremium    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  trips        Trip[]
+}
+
+model Trip {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String        @db.ObjectId
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  destination    String
+  country        String
+  startDate      DateTime
+  endDate        DateTime
+  durationDays   Int
+  travelersCount Int           @default(1)
+  travelStyle    String        // e.g. 'Luxury' | 'Budget' | 'Balanced' | 'Adventure' | 'Relaxation' | 'Culture'
+  coverImage     String?
+  budget         TripBudget
+  itinerary      DayPlan[]
+  packingList    PackingItem[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+type TripBudget {
+  totalEstimated Float
+  currency       String            @default("USD")
+  categories     BudgetCategories
+}
+
+type BudgetCategories {
+  flights    Float @default(0)
+  hotels     Float @default(0)
+  food       Float @default(0)
+  activities Float @default(0)
+  other      Float @default(0)
+}
+
+type DayPlan {
+  dayNumber  Int
+  date       String?
+  title      String
+  activities Activity[]
+}
+
+type Activity {
+  id            String?
+  time          String?
+  title         String
+  description   String
+  location      String?
+  estimatedCost Float?
+  currency      String?      @default("USD")
+  category      String       // 'Sightseeing' | 'Food & Drink' | 'Adventure' | 'Shopping' | 'Culture' | 'Relaxation' | 'Travel'
+  coordinates   Coordinates?
+  rating        Float?
+}
+
+type Coordinates {
+  lat Float
+  lng Float
+}
+
+type PackingItem {
+  id       String
+  item     String
+  category String
+  packed   Boolean @default(false)
+}
+
+model VisaInfo {
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  countryCode        String   @unique // e.g. "FR", "JP", "CH", "IN"
+  countryName        String
+  visaRequired       Boolean
+  visaType           String?  // e.g. "Visa Free", "eVisa", "Visa on Arrival", "Embassy Visa"
+  maxStayDays        Int?
+  passportValidityMo Int?     @default(6)
+  documentsNeeded    String[]
+  notes              String?
+  updatedAt          DateTime @updatedAt
+}

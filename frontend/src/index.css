@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --background: 220 20% 97%;
+    --foreground: 224 71.4% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 262 83% 58%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 262 83% 95%;
+    --accent-foreground: 262 83% 40%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 262 83% 58%;
+    --radius: 0.85rem;
+  }
+
+  .dark {
+    --background: 224 71.4% 4.1%;
+    --foreground: 210 20% 98%;
+    --card: 224 71.4% 7%;
+    --card-foreground: 210 20% 98%;
+    --popover: 224 71.4% 7%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 263 70% 65%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+    --accent: 263 50% 20%;
+    --accent-foreground: 263 70% 75%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 263 70% 65%;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.login-atmosphere {
+  background:
+    radial-gradient(circle at var(--pointer-x) var(--pointer-y), rgba(34, 211, 238, 0.2), transparent 22rem),
+    radial-gradient(circle at 12% 18%, rgba(99, 102, 241, 0.22), transparent 24rem),
+    radial-gradient(circle at 88% 84%, rgba(236, 72, 153, 0.16), transparent 28rem),
+    linear-gradient(135deg, #f8fafc 0%, #eef2ff 48%, #ecfeff 100%);
+  transition: background 300ms ease;
+}
+
+.dark .login-atmosphere {
+  background:
+    radial-gradient(circle at var(--pointer-x) var(--pointer-y), rgba(34, 211, 238, 0.16), transparent 22rem),
+    radial-gradient(circle at 12% 18%, rgba(79, 70, 229, 0.3), transparent 24rem),
+    radial-gradient(circle at 88% 84%, rgba(190, 24, 93, 0.2), transparent 28rem),
+    linear-gradient(135deg, #020617 0%, #111827 48%, #082f49 100%);
+}
+
+.login-stars {
+  background-image: radial-gradient(circle, rgba(165, 243, 252, 0.8) 1px, transparent 1.5px);
+  background-size: 44px 44px;
+  animation: login-drift 18s linear infinite;
+}
+
+.login-route {
+  animation: login-route 4s linear infinite;
+}
+
+.login-route-delay {
+  animation-delay: -1.8s;
+}
+
+.login-pin {
+  animation: login-pin 3s ease-in-out infinite;
+}
+
+.login-pin-delay {
+  animation-delay: -1.2s;
+}
+
+.login-float {
+  animation: login-float 5s ease-in-out infinite;
+}
+
+@keyframes login-drift {
+  from { background-position: 0 0; }
+  to { background-position: 44px 44px; }
+}
+
+@keyframes login-route {
+  to { stroke-dashoffset: -80px; }
+}
+
+@keyframes login-pin {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-7px) scale(1.08); }
+}
+
+@keyframes login-float {
+  0%, 100% { transform: translateY(0) rotate(-8deg); }
+  50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.4);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.7);
+}
+
+/* Glassmorphism helpers */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark .glass-panel {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
